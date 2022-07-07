@@ -33,8 +33,27 @@
 </template>
 
 <script>
+import { getAuth } from "firebase/auth";
 export default {
     name: 'nav-bar',
+    data() {
+        return {
+            login: false,
+        }
+    },
+    created() {
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+        if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        // ...
+            this.login = true
+        } else {
+        // No user is signed in.
+        }
+    },
 }
 </script>
 
