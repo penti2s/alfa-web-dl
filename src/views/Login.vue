@@ -51,7 +51,7 @@ export default {
             signInWithEmailAndPassword(auth, this.email, this.password)
                 .then(() => {
                     alert('logeado con exito')
-                    this.$router.push('/')
+                    this.$router.push('/admin')
                 })
                 .catch((error) => {
                     console.log(error)

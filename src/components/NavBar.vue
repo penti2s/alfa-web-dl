@@ -7,19 +7,30 @@
 
             <v-spacer></v-spacer>
 
+                <v-btn v-if="login"  color="transparent" outlined>
+                    
+                    <router-link style="text-decoration: none"  to="/"> Home |</router-link>
+                </v-btn>
+                <v-btn v-if="login"  color="transparent" outlined>
+                    
+                    <router-link style="text-decoration: none"  to="/admin"> Admin |</router-link>
+                </v-btn>
 
-            <v-toolbar-title>{{ email }}</v-toolbar-title>
-
-            <v-btn icon>
-                <v-icon
-                    v-if="login"
-                    @click="logOut"
-                >mdi-logout-variant</v-icon>
-            </v-btn>
-
-            <v-btn icon>
-                <v-icon>mdi-magnify</v-icon>
-            </v-btn>
+                <v-toolbar-title v-if="login">{{ email }}</v-toolbar-title>
+                <v-btn
+                    v-if="login" 
+                    icon>
+                        <v-icon
+                            @click="logOut"
+                        >mdi-logout-variant</v-icon>
+                </v-btn>
+                <v-btn
+                    class="mr-5"
+                    v-else
+                    icon>
+                        <router-link v-if="'/login'==getCurrentUrl"   style="text-decoration: none" to="/Register">Registro</router-link>
+                        <router-link v-else   style="text-decoration: none" to="/login">Login</router-link>
+                </v-btn>
 
         </v-app-bar>
     </div>
@@ -37,8 +48,6 @@ export default {
     },
     methods: {
         logOut(){
-
-
             const auth = getAuth();
             signOut(auth).then(() => {
             // Sign-out successful.
@@ -49,16 +58,18 @@ export default {
             });
         }
     },  
+    computed: {
+        getCurrentUrl(){
+            return this.$route.path
+        }
+    },
     created() {
         const auth = getAuth();
         const user = auth.currentUser;
-
         if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         // ...
-            console.log("User is signed in");
-            console.log(user)
             this.login = true
             this.email = user.email
         } else {
@@ -68,5 +79,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+    a{
+        color: blue;
+    }
 </style>
